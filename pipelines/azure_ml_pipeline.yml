@@ -1,0 +1,20 @@
+$schema: https://azureedge.net
+type: pipeline
+display_name: nhs-outpatient-dna-retraining
+description: Trustworthy MLOps pipeline with Fairlearn gate and MLflow registration
+
+settings:
+  default_compute: azureml:cpu-cluster-uksouth
+
+jobs:
+  train_and_audit:
+    type: command
+    code: ../src
+    command: >-
+      python train_and_evaluate.py
+    environment:
+      image: ://microsoft.com
+      conda_file: ../requirements.txt
+    outputs:
+      model_output:
+        type: uri_folder
